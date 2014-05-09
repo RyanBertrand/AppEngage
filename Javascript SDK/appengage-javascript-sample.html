@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="PATH_TO/AppEngage-1.00.js"></script>
+    <title></title>
+
+    <script>
+        AppEngage.initializeApp("YOUR_API_KEY", "YOUR_USERS_FACEBOOK_ID");
+        AppEngage.setUpEventHandlerForWindow(window);
+        AppEngage.setCurrencyRewardHandler(function (currency_amount, claim_token){
+            console.log('Your user just claimed ' + currency_amount + ' currency!  ' +
+                        'You can now call your server to add the currency.  ' +
+                        'It is recommended for security purposes that your server makes a request to our server to verify the claim_token.  ' +
+                        'Read more here: http://engage.pxladdicts.com/dashboard.html#/docs.  ' +
+                        'This transaction\'s claim_token is:'  + claim_token);
+        });
+    </script>
+
+</head>
+<body style="margin: 0px;">
+
+<div id="appengage-root"></div>
+<button onclick="AppEngage.showDialog();">Show Dialog</button>
+<button onclick="AppEngage.userPerformedEngagementAction('play');">Play Action</button>
+<button onclick="AppEngage.userPerformedEngagementAction('win');">Win Action</button>
+
+</body>
+</html>
