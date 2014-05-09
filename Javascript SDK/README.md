@@ -3,7 +3,7 @@ Clone this repo or [download here](https://github.com/midversestudios/AppEngage/
 
 **ATTENTION**: JQuery is required. 
 
-Import the following files at the top of your page's <head>:
+Import the following files at the top of your page's **head** tag:
 + **AppEngage-1.00.js**
  
 If you are publishing the **AppEngage Dialog**, complete the following steps:
@@ -17,8 +17,8 @@ Before you begin, make sure your application is set up correctly on the AppEngag
 
 ##Let's start up the AppEngage SDK!
 
-In your **<head>**:
-
+In your pages' **head** tag:
+ 
 Initialize our SDK with your app's APP Key from our dashboard: 
 ```javascript
         AppEngage.initializeApp("YOUR_APP_API_KEY", "YOUR_USERS_FACEBOOK_ID");
@@ -40,18 +40,24 @@ AppEngage.setCurrencyRewardHandler(function (currency_amount, claim_token){
         });
 ```
 
+Below your page's **body** tag, place the **appengage-root** div.
+```html
+        <div id="appengage-root"></div>
+```
+
+
 ##Showing the AppEngage Dialog
 
 To show the AppEngage dialog call:
-```objective-c
-[MVAppEngage showEngagementDialog];
+```javascript
+AppEngage.showDialog();
 ```
 
 ##Completing Engagement Actions
 To complete an action add the below line when the action requirements are completed in your app. Pass the action type as the parameter.
 
-```objective-c
-[MVAppEngage userPerformedEngagementAction:@"THE_ACTION"];
+```javascript
+AppEngage.userPerformedEngagementAction('THE_ACTION');
 ```
 	
 Built in Engagement Actions:
@@ -80,6 +86,6 @@ Publishers are able to verify currency claims by making a call to the following 
 
 To prevent fraud, you should give currency to the user only server-side, and only when **token_verified** is 1 and claimed is 0
 
-##Sample App
+##Sample HTML
 
-If you have any issues take a look at how the SampleApp works. If you still having issues contact your representative with specific questions and we will be happy to help.
+If you have any issues take a look at how the appengage-javascript-sample.html works. If you still having issues contact your representative with specific questions and we will be happy to help.
