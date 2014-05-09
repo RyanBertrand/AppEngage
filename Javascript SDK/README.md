@@ -1,23 +1,10 @@
 ##Prerequisites
 Clone this repo or [download here](https://github.com/midversestudios/AppEngage/archive/master.zip)
 
-**ATTENTION**: Do to Apple's recent moves to control the use of **IDFA**, we have dropped **< iOS 6** support. 
+**ATTENTION**: JQuery is required. 
 
-Add the following files to your Xcode project:
-+ **libAppEngage.a** 
-+ **MVAppEngage.h**
-+ **MVAppEngageResources.bundle**
-
-
-Link the following frameworks:
-+ **AdSupport.framework**  
-+ **Security.framework**
- 
-
-
-In your target's **Build Settings** under the **Other Linker Flags** section, add the following flags:
-+ **-ObjC**
-+ **-all_load**
+Import the following files at the top of your page's <head>:
++ **AppEngage-1.00.js**
  
 If you are publishing the **AppEngage Dialog**, complete the following steps:
 
@@ -25,29 +12,32 @@ If you are publishing the **AppEngage Dialog**, complete the following steps:
 
 ##Setting up your device for testing 
 
-Before you begin, make sure your application is set up correctly on the AppEngage dashboard at engage.pxladdicts.com. Add your test device’s **IDFA** to the list of test devices on the AppEngage dashboard. 
+Before you begin, make sure your application is set up correctly on the AppEngage dashboard at engage.pxladdicts.com. Add your test account’s **UNIQUE_USER_ID** to the list of test devices on the AppEngage dashboard. 
 
 
 ##Let's start up the AppEngage SDK!
 
-
-In your **AppDelgate**'s **application:didFinishLaunchingWithOptions:** method:
+In your **<head>**:
 
 Initialize our SDK with your app's APP Key from our dashboard: 
-```objective-c
-[MVAppEngage applicationDidLaunchWithAppKey:@"PUT_YOUR_APP_KEY_HERE"];
+```javascript
+        AppEngage.initializeApp("YOUR_APP_API_KEY", "YOUR_USERS_FACEBOOK_ID");
 ```
 
-Set your game's user ID for the logged in user.  We recomend this is a uniqueID such as a user's databaseID, etc.
-```objective-c
-[MVAppEngage setPublisherUserID:@"THIS_IS_MY_APPS_UNIQUE_USER_ID"];
+The SDK needs an instance of the window so we can handle certain events correctly.  Place this snippit below.
+```javascript
+        AppEngage.setUpEventHandlerForWindow(window);
 ```
 
 Set up a block to be notified when your user earns currency.
-```objective-c
-[MVAppEngage setCurrencyRewardHandler:^(NSNumber *currencyAmount, NSString *currencyClaimToken){
-        NSLog(@"User just earned %@ currency with the claim token of %@", currencyAmount, currencyClaimToken);
-    }];
+```javascript
+AppEngage.setCurrencyRewardHandler(function (currency_amount, claim_token){
+            console.log('Your user just claimed ' + currency_amount + ' currency!  ' +
+                        'You can now call your server to add the currency.  ' +
+                        'It is recommended for security purposes that your server makes a request to our server to verify the claim_token.  ' +
+                        'Read more here: http://engage.pxladdicts.com/dashboard.html#/docs.  ' +
+                        'This transaction\'s claim_token is:'  + claim_token);
+        });
 ```
 
 ##Showing the AppEngage Dialog
